@@ -57,18 +57,22 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'registro_horas.wsgi.application'
 
-DATABASE_URL = config('DATABASE_URL', default=f'sqlite:///{BASE_DIR / "db.sqlite3"}')
+DATABASE_URL = config('DATABASE_URL', default='')
 
-if DATABASE_URL.startswith('sqlite'):
+print(f"DATABASE_URL detectada: {DATABASE_URL[:50]}..." if DATABASE_URL else "DATABASE_URL está vacía")
+
+if DATABASE_URL and DATABASE_URL.startswith('postgres'):
+    print("Usando PostgreSQL desde DATABASE_URL")
+    DATABASES = {
+        'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600, conn_health_checks=True)
+    }
+else:
+    print("Usando SQLite como fallback")
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': BASE_DIR / 'db.sqlite3',
         }
-    }
-else:
-    DATABASES = {
-        'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600, conn_health_checks=True)
     }
 
 REST_FRAMEWORK = {
