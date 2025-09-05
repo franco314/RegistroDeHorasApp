@@ -1,0 +1,1 @@
+web: gunicorn registro_horas.wsgi:application --bind 0.0.0.0:$PORT 
