@@ -9,6 +9,7 @@ from datetime import datetime, timedelta
 class RegistroDeHorasViewSet(viewsets.ModelViewSet):
     serializer_class = RegistroDeHorasSerializer
     permission_classes = [permissions.IsAuthenticated]
+    pagination_class = None  # Deshabilitamos paginación para este ViewSet
 
     def get_queryset(self):
         return RegistroDeHoras.objects.filter(usuario=self.request.user).order_by('-fecha')
