@@ -1,10 +1,18 @@
 {
+  "model": "claude-sonnet-4-20250514",
   "permissions": {
     "allow": [
       "Bash(dir)",
-      "Bash(dir:*)"
+      "Bash(dir:*)",
+      "Bash(.envScriptsactivate)",
+      "Bash(call envScriptsactivate.bat)",
+      "Bash(env/Scripts/python manage.py createsuperuser:*)"
     ],
     "deny": [],
     "ask": []
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "input=$(cat); cwd=$(echo \"$input\" | jq -r '.workspace.current_dir'); project=$(basename \"$cwd\"); branch=$(cd \"$cwd\" 2>/dev/null && git branch --show-current 2>/dev/null || echo \"no-git\"); style=$(echo \"$input\" | jq -r '.output_style.name'); printf \"\\033[2m%s\\033[0m | \\033[2mgit:%s\\033[0m | \\033[2m%s\\033[0m\" \"$project\" \"$branch\" \"$style\""
   }
 }

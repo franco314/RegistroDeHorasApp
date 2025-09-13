@@ -9,7 +9,6 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         fields = ['username', 'password']
 
     def create(self, validated_data):
-        # Usamos create_user para que la contraseña se guarde encriptada
         user = User.objects.create_user(
             username=validated_data['username'],
             password=validated_data['password']
